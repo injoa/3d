@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="plane">
+<!--        <img id="a" class="vertex" src="vertex.png"> -->
+    </div>
+</body>
+
+
+<style>
+    #plane{
+        left: 50vw;
+        top: 0;
+        position: absolute;
+        transform: scaleY(-1);
+        height: 50vh;
+        width: 50vw;
+    }
+    .vertex{
+        position: absolute;
+        
+
+    }
+    #a{
+        top: 100px;
+        left: 100px;
+        
+    }
+</style>
+
+<script>
+
+var mesh = [[0,0,10],[100,0,10],[100,100,10],[0,100,10],[0,0,15],[100,0,15],[100,100,15],[0,100,15]]
+
+var cam = [[0,100,0],[0,0,0]]
+
+mesh.forEach(plot)
+
+
+function plot(item , index , arr){
+    console.log(arr[index])
+    var i = document.createElement("img")
+    
+    i.src = "vertex.png"
+    i.setAttribute("class","vertex")
+    i.style.position = "absolute"
+    //i.style.transformOrigin = "center"
+    i.style.transform = "translate(-50%, -50%)"
+    i.style.top = `${(arr[index][1]-cam[0][1])/arr[index][2]}vw`
+    i.style.left = `${(arr[index][0]-cam[0][0])/arr[index][2]}vw`
+    document.getElementById("plane").appendChild(i)
+
+
+    var edge = document.createElement("div");
+    edge.style.backgroundColor = "red";
+    edge.style.position = "absolute"
+     edge.style.transform = "translateY(-50%)"
+    edge.style.left = `${(arr[index][0]-cam[0][0])/arr[index][2]}vw`
+    edge.style.top = `${(arr[index][1]-cam[0][1])/arr[index][2]}vw`
+    edge.style.width = Math.hypot( (arr[index+1][0]-cam[0][0])/arr[index+1][2]-(arr[index][0]-cam[0][0])/arr[index][2] ,(arr[index+1][1]-cam[0][1])/arr[index+1][2]-(arr[index][1]-cam[0][1])/arr[index][2]) +"vw"
+    edge.style.height = 2+"px"
+
+    document.getElementById("plane").appendChild(edge)
+
+}
+
+
+
+
+
+
+var edge = document.createElement("div");
+edge.style.backgroundColor = "red";
+edge.style.position = "absolute"
+edge.style.width = 20+"vw"
+edge.style.height = '1px'
+
+document.getElementById("plane").appendChild(edge)
+
+/*
+(arr[index+1][1]-cam[0][1])/arr[index+1][2]-(arr[index][1]-cam[0][1])/arr[index][2]
+var i = document.createElement("img")
+i.src = "vertex.png"
+i.style.position = "absolute"
+i.style.top = '50px'
+i.style.left = '500px'
+document.getElementById("plane").appendChild(i)
+*/
+
+
+</script>
+
+</html>
