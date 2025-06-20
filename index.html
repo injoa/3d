@@ -6,6 +6,7 @@
     <title>Document</title>
 </head>
 <body>
+    <input id="pos">
     <div id="plane">
 <!--        <img id="a" class="vertex" src="vertex.png"> -->
     </div>
@@ -56,18 +57,26 @@ function plot(item , index , arr){
     document.getElementById("plane").appendChild(i)
 
 
-    var edge = document.createElement("div");
-    edge.style.backgroundColor = "red";
-    edge.style.position = "absolute"
-     edge.style.transform = "translateY(-50%)"
-    edge.style.left = `${(arr[index][0]-cam[0][0])/arr[index][2]}vw`
-    edge.style.top = `${(arr[index][1]-cam[0][1])/arr[index][2]}vw`
-    edge.style.width = Math.hypot( (arr[index+1][0]-cam[0][0])/arr[index+1][2]-(arr[index][0]-cam[0][0])/arr[index][2] ,(arr[index+1][1]-cam[0][1])/arr[index+1][2]-(arr[index][1]-cam[0][1])/arr[index][2]) +"vw"
-    edge.style.height = 2+"px"
+    if (index < arr.length - 1) {
+        var edge = document.createElement("div");
+        edge.style.backgroundColor = "red";
+        edge.style.position = "absolute";
+        edge.style.transform = "translateY(-50%)";
+        edge.style.left = `${(arr[index][0] - cam[0][0]) / arr[index][2]}vw`;
+        edge.style.top = `${(arr[index][1] - cam[0][1]) / arr[index][2]}vw`;
 
-    document.getElementById("plane").appendChild(edge)
+        edge.style.width = Math.hypot(
+            (arr[index + 1][0] - cam[0][0]) / arr[index + 1][2] - (arr[index][0] - cam[0][0]) / arr[index][2],
+            (arr[index + 1][1] - cam[0][1]) / arr[index + 1][2] - (arr[index][1] - cam[0][1]) / arr[index][2]
+        ) + "vw";
+
+        edge.style.height = "2px";
+        document.getElementById("plane").appendChild(edge);
+        }
 
 }
+
+
 
 
 
@@ -91,6 +100,40 @@ i.style.top = '50px'
 i.style.left = '500px'
 document.getElementById("plane").appendChild(i)
 */
+
+let dragging = false;
+let lastX = 0;
+let lastY = 0;
+
+document.addEventListener("mousedown", (e) => {
+  dragging = true;
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+
+document.addEventListener("mouseup", () => {
+  dragging = false;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!dragging) return;
+
+  const deltaX = e.clientX - lastX;
+  const deltaY = e.clientY - lastY;
+
+  cam[0][0] += deltaX * 0.5;   // move camera X
+  cam[0][1] += -deltaY * 0.5;  // move camera Y (inverted)
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+  plane = document.getElementById("plane");
+  plane.innerHTML = ""
+  mesh.forEach(plot)
+  console.log("cam:", JSON.stringify(cam));
+  document.getElementById("pos").value = JSON.stringify(cam[0]);
+
+});
+
 
 
 </script>
