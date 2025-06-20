@@ -59,7 +59,7 @@ function plot(item , index , arr){
 
     if (index < arr.length - 1) {
         var edge = document.createElement("div");
-        edge.style.backgroundColor = "red";
+        //edge.style.backgroundColor = "red";
         edge.style.position = "absolute";
         edge.style.transform = "translateY(-50%)";
         edge.style.left = `${(arr[index][0] - cam[0][0]) / arr[index][2]}vw`;
@@ -80,7 +80,7 @@ function plot(item , index , arr){
 
 
 
-
+/*
 
 
 var edge = document.createElement("div");
@@ -91,7 +91,7 @@ edge.style.height = '1px'
 
 document.getElementById("plane").appendChild(edge)
 
-/*
+
 (arr[index+1][1]-cam[0][1])/arr[index+1][2]-(arr[index][1]-cam[0][1])/arr[index][2]
 var i = document.createElement("img")
 i.src = "vertex.png"
